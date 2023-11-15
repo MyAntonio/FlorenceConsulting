@@ -1,0 +1,18 @@
+package it.florenceconsulting.esercizio.service;
+
+import java.util.List;
+
+import it.florenceconsulting.esercizio.dto.User;
+
+public interface IUtenteService {
+
+	int insertUtente(User u);
+
+	void updateUtente(User u);
+
+	void deleteUtente(User u);
+
+	List<User> findUserByNomeCognome(String nome, String cognome);
+
+	List<User> searchUser(User u);
+}

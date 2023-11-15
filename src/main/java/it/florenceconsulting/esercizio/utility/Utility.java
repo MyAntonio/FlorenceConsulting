@@ -1,0 +1,54 @@
+package it.florenceconsulting.esercizio.utility;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import it.florenceconsulting.esercizio.dto.User;
+import it.florenceconsulting.esercizio.entity.AnaUtenti;
+
+@Component
+public class Utility {
+
+	private Logger log = LoggerFactory.getLogger(Utility.class);
+
+	/**
+	 * TODO valutare se metterlo nel dto
+	 * @param u
+	 * @return
+	 */
+	public AnaUtenti userToAnaUtentiRepo(User u) {
+		log.info("Utility.userToAnaUtentiRepo - START");
+		AnaUtenti utente = new AnaUtenti();
+		utente.setNome(u.getNome());
+		utente.setCognome(u.getCognome());
+		utente.setEta(u.getEta());
+		utente.setIndirizzo(u.getIndirizzo());
+		utente.setMail(u.getMail());
+		utente.setCod_fisc(u.getCodFisc());
+		log.info("Utility.userToAnaUtentiRepo - END");
+		return utente;
+	}
+
+	/**
+	 * TODO valutare se metterlo nel dto
+	 * @param utenti
+	 * @return
+	 */
+	public List<User> anaUtentiToUserList(List<AnaUtenti> utenti) {
+		log.info("Utility.AnaUtentiToUserList - START");
+		List<User> users = new ArrayList<>();
+		for(AnaUtenti utente : utenti) {
+			User user = new User(utente.getNome(), utente.getCognome(), utente.getMail(),
+					utente.getEta(), utente.getCod_fisc(), utente.getIndirizzo());
+			users.add(user);
+		}
+		log.info("Utility.AnaUtentiToUserList - END");
+		return users;
+	}
+	
+	
+}

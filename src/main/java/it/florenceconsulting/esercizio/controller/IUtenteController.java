@@ -18,16 +18,16 @@ import it.florenceconsulting.esercizio.dto.User;
 public interface IUtenteController {
 	
 	@PostMapping("/insert")
-	ResponseEntity<Void> insertUtente(@RequestBody User u);
+	ResponseEntity<Integer> insertUtente(@RequestBody User u);
 	
 	@PutMapping("/update")
-	ResponseEntity<Void> updateUtente(@RequestBody User u);
+	ResponseEntity<String> updateUtente(@RequestBody User u);
 	
 	@DeleteMapping("/delete")
-	ResponseEntity<Void> deleteUtente(@RequestParam(name = "cf") String codFisc);
+	ResponseEntity<String> deleteUtente(@RequestBody User u);
 	
 	@GetMapping("/find")
-	ResponseEntity<List<User>> findUserByCf(@RequestParam(name = "nome",  required = false) String nome,
+	ResponseEntity<List<User>> findUserByNomeCognome(@RequestParam(name = "nome",  required = false) String nome,
 			@RequestParam(name = "cognome", required = false) String cognome);
 	
 	@PostMapping("/search")
