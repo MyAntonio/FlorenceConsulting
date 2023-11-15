@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.florenceconsulting.esercizio.controller.IUtenteController;
 import it.florenceconsulting.esercizio.dto.User;
@@ -60,6 +61,14 @@ public class UtenteController implements IUtenteController {
 		List<User> utenti = utenteService.searchUser(u);
 		log.info("UtenteController.searchUser - END");
 		return ResponseEntity.ok().body(utenti);
+	}
+
+	@Override
+	public ResponseEntity<String> uploadCsv(MultipartFile file) {
+		log.info("UtenteController.uploadCsv - START");
+		utenteService.uploadCsv(file);
+		log.info("UtenteController.uploadCsv - END");
+		return ResponseEntity.ok().body("OK");
 	}
 
 }

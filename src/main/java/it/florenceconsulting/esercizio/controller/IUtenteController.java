@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.florenceconsulting.esercizio.dto.User;
 
@@ -18,18 +20,21 @@ import it.florenceconsulting.esercizio.dto.User;
 public interface IUtenteController {
 	
 	@PostMapping("/insert")
-	ResponseEntity<Integer> insertUtente(@RequestBody User u);
+	public ResponseEntity<Integer> insertUtente(@RequestBody User u);
 	
 	@PutMapping("/update")
-	ResponseEntity<String> updateUtente(@RequestBody User u);
+	public ResponseEntity<String> updateUtente(@RequestBody User u);
 	
 	@DeleteMapping("/delete")
-	ResponseEntity<String> deleteUtente(@RequestBody User u);
+	public ResponseEntity<String> deleteUtente(@RequestBody User u);
 	
 	@GetMapping("/find")
-	ResponseEntity<List<User>> findUserByNomeCognome(@RequestParam(name = "nome",  required = false) String nome,
+	public ResponseEntity<List<User>> findUserByNomeCognome(@RequestParam(name = "nome",  required = false) String nome,
 			@RequestParam(name = "cognome", required = false) String cognome);
 	
 	@PostMapping("/search")
-	ResponseEntity<List<User>> searchUser(@RequestBody User u);
+	public ResponseEntity<List<User>> searchUser(@RequestBody User u);
+	
+	@PostMapping("/uploadCsv")
+	public ResponseEntity<String> uploadCsv(@RequestPart(value = "csv") MultipartFile file);
 }

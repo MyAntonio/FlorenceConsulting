@@ -1,11 +1,19 @@
 package it.florenceconsulting.esercizio.service.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 import it.florenceconsulting.esercizio.dto.User;
 import it.florenceconsulting.esercizio.entity.AnaUtenti;
@@ -28,7 +36,7 @@ public class UtenteService implements IUtenteService {
 	public int insertUtente(User u) {
 		log.info("UtenteService.insertUtente - START");
 		AnaUtenti anaUtenti = utility.userToAnaUtentiRepo(u);
-		anaUtenti = anaUtentiRepo.save(anaUtenti);
+		anaUtenti = anaUtentiRepo.saveAndFlush(anaUtenti);
 		log.info("UtenteService.insertUtente - END");
 		return anaUtenti.getId();
 	}
@@ -80,6 +88,30 @@ public class UtenteService implements IUtenteService {
 		List<User> users = utility.anaUtentiToUserList(utenti);
 		log.info("UtenteService.searchUser - END");
 		return users;
+	}
+
+	@Override
+	public void uploadCsv(MultipartFile file) {
+		log.info("UtenteService.uploadCsv - START");
+		try {
+			Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+			
+			CsvToBean<User> csvToBean = new CsvToBeanBuilder<User>(reader)
+                     .withType(User.class)
+                     .withIgnoreLeadingWhiteSpace(true)
+                     .build();
+			
+			List<User> users = csvToBean.parse();
+			
+			List<AnaUtenti> utenti = utility.userToAnaUtentiList(users);
+			
+			anaUtentiRepo.saveAllAndFlush(utenti);
+			
+		} catch (IOException e) {
+			// TODO Gestire eccezioni
+			e.printStackTrace();
+		}
+		log.info("UtenteService.uploadCsv - END");
 	}
 
 }

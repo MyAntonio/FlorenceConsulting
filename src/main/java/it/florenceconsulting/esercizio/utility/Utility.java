@@ -49,6 +49,21 @@ public class Utility {
 		log.info("Utility.AnaUtentiToUserList - END");
 		return users;
 	}
+
+	/**
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public List<AnaUtenti> userToAnaUtentiList(List<User> users) {
+		log.info("Utility.userToAnaUtentiList - START");
+		List<AnaUtenti> utenti = new ArrayList<>();
+		for(User user : users) {
+			utenti.add(userToAnaUtentiRepo(user));
+		}
+		log.info("Utility.userToAnaUtentiList - END");
+		return utenti;
+	}
 	
 	
 }
