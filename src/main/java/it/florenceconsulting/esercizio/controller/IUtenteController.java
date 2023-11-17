@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.florenceconsulting.esercizio.dto.User;
+import jakarta.validation.Valid;
 
 /**
  * TODO aggiungere documentazione swagger
@@ -18,18 +21,22 @@ import it.florenceconsulting.esercizio.dto.User;
 public interface IUtenteController {
 	
 	@PostMapping("/insert")
-	ResponseEntity<Void> insertUtente(@RequestBody User u);
+	public ResponseEntity<Integer> insertUtente(@RequestBody @Valid User u);
 	
 	@PutMapping("/update")
-	ResponseEntity<Void> updateUtente(@RequestBody User u);
+	public ResponseEntity<String> updateUtente(@RequestParam(name = "id", required = true) Integer id, 
+			@RequestBody(required = true) @Valid User u);
 	
 	@DeleteMapping("/delete")
-	ResponseEntity<Void> deleteUtente(@RequestParam(name = "cf") String codFisc);
+	public ResponseEntity<String> deleteUtenteById(@RequestParam(name = "id") Integer id);
 	
 	@GetMapping("/find")
-	ResponseEntity<List<User>> findUserByCf(@RequestParam(name = "nome",  required = false) String nome,
+	public ResponseEntity<List<User>> findUserByNomeCognome(@RequestParam(name = "nome",  required = false) String nome,
 			@RequestParam(name = "cognome", required = false) String cognome);
 	
 	@PostMapping("/search")
-	ResponseEntity<List<User>> searchUser(@RequestBody User u);
+	public ResponseEntity<List<User>> searchUser(@RequestBody User u);
+	
+	@PostMapping("/uploadCsv")
+	public ResponseEntity<String> uploadCsv(@RequestPart(value = "csv") MultipartFile file);
 }

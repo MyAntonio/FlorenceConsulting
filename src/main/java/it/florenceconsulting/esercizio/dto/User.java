@@ -1,18 +1,44 @@
 package it.florenceconsulting.esercizio.dto;
 
+import java.io.Serializable;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 /**
  * TODO aggiungere documentazione swagger
+ * TODO aggiungere validazioni su singoli campi oggetto
  */
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@NotEmpty
+	@Size(max = 50, message = "consentita una lunghezza massima di 50 caratteri")
 	private String nome;
+	
+	@NotEmpty
+	@Size(max = 50, message = "consentita una lunghezza massima di 50 caratteri")
 	private String cognome;
+	
+	@NotEmpty
+	@Email
 	private String mail;
-	private int eta;
+	
+	private Integer eta;
+	
+	@NotEmpty
+	@Size(min = 16, max = 16, message = "Il codice fiscale dev'essere composto da 16 caratteri")
 	private String codFisc;
+	
+	@Size(max = 100, message = "consentita una lunghezza massima di 50 caratteri")
 	private String indirizzo;
 	
-	public User(String nome, String cognome, String mail, int eta, String codFisc, String indirizzo) {
+	public User(String nome, String cognome, String mail, Integer eta, String codFisc, String indirizzo) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.mail = mail;
@@ -45,11 +71,11 @@ public class User {
 		this.mail = mail;
 	}
 
-	public int getEta() {
+	public Integer getEta() {
 		return eta;
 	}
 
-	public void setEta(int eta) {
+	public void setEta(Integer eta) {
 		this.eta = eta;
 	}
 
