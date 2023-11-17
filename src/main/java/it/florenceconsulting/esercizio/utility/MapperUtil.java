@@ -7,16 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import io.micrometer.common.util.StringUtils;
 import it.florenceconsulting.esercizio.dto.User;
 import it.florenceconsulting.esercizio.entity.AnaUtenti;
 
 @Component
-public class Utility {
+public class MapperUtil {
 
-	private Logger log = LoggerFactory.getLogger(Utility.class);
+	private Logger log = LoggerFactory.getLogger(MapperUtil.class);
 
 	/**
-	 * TODO valutare se metterlo nel dto
 	 * @param u
 	 * @return
 	 */
@@ -25,8 +25,8 @@ public class Utility {
 		AnaUtenti utente = new AnaUtenti();
 		utente.setNome(u.getNome());
 		utente.setCognome(u.getCognome());
-		utente.setEta(u.getEta());
-		utente.setIndirizzo(u.getIndirizzo());
+		utente.setEta(u.getEta() != null ? u.getEta() : null);
+		utente.setIndirizzo(StringUtils.isBlank(u.getIndirizzo()) ? null : u.getIndirizzo());
 		utente.setMail(u.getMail());
 		utente.setCod_fisc(u.getCodFisc());
 		log.info("Utility.userToAnaUtentiRepo - END");
@@ -34,7 +34,6 @@ public class Utility {
 	}
 
 	/**
-	 * TODO valutare se metterlo nel dto
 	 * @param utenti
 	 * @return
 	 */

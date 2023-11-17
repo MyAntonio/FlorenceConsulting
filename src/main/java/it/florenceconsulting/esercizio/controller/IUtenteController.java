@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.florenceconsulting.esercizio.dto.User;
+import jakarta.validation.Valid;
 
 /**
  * TODO aggiungere documentazione swagger
@@ -20,11 +21,11 @@ import it.florenceconsulting.esercizio.dto.User;
 public interface IUtenteController {
 	
 	@PostMapping("/insert")
-	public ResponseEntity<Integer> insertUtente(@RequestBody User u);
+	public ResponseEntity<Integer> insertUtente(@RequestBody @Valid User u);
 	
 	@PutMapping("/update")
 	public ResponseEntity<String> updateUtente(@RequestParam(name = "id", required = true) Integer id, 
-			@RequestBody(required = true) User u);
+			@RequestBody(required = true) @Valid User u);
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<String> deleteUtenteById(@RequestParam(name = "id") Integer id);
