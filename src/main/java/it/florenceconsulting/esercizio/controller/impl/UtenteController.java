@@ -32,7 +32,7 @@ public class UtenteController implements IUtenteController {
 	}
 
 	@Override
-	public ResponseEntity<String> updateUtente(int id, User u) {
+	public ResponseEntity<String> updateUtente(Integer id, User u) {
 		log.info("UtenteController.updateUtente - START");
 		utenteService.updateUtente(id,u);
 		log.info("UtenteController.updateUtente - END");
@@ -40,13 +40,13 @@ public class UtenteController implements IUtenteController {
 	}
 
 	@Override
-	public ResponseEntity<String> deleteUtente(User u) {
-		log.info("UtenteController.deleteUtente - START");
-		utenteService.deleteUtente(u);
-		log.info("UtenteController.deleteUtente - END");
+	public ResponseEntity<String> deleteUtenteById(Integer id) {
+		log.info("UtenteController.deleteUtenteById - START");
+		utenteService.deleteUtenteById(id);
+		log.info("UtenteController.deleteUtenteById - END");
 		return ResponseEntity.ok().body("OK");
 	}
-
+	
 	@Override
 	public ResponseEntity<List<User>> findUserByNomeCognome(String nome, String cognome) {
 		log.info("UtenteController.findUserByNomeCognome - START");
@@ -70,5 +70,4 @@ public class UtenteController implements IUtenteController {
 		log.info("UtenteController.uploadCsv - END");
 		return ResponseEntity.ok().body("OK");
 	}
-
 }

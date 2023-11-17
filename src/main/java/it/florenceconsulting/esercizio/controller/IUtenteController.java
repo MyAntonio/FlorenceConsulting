@@ -23,11 +23,11 @@ public interface IUtenteController {
 	public ResponseEntity<Integer> insertUtente(@RequestBody User u);
 	
 	@PutMapping("/update")
-	public ResponseEntity<String> updateUtente(@RequestParam(name = "id", required = true) int id, 
-			@RequestBody User u);
+	public ResponseEntity<String> updateUtente(@RequestParam(name = "id", required = true) Integer id, 
+			@RequestBody(required = true) User u);
 	
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteUtente(@RequestBody User u);
+	public ResponseEntity<String> deleteUtenteById(@RequestParam(name = "id") Integer id);
 	
 	@GetMapping("/find")
 	public ResponseEntity<List<User>> findUserByNomeCognome(@RequestParam(name = "nome",  required = false) String nome,

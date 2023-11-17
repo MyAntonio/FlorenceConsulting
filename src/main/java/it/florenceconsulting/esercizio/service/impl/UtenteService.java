@@ -3,18 +3,18 @@ package it.florenceconsulting.esercizio.service.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
 import it.florenceconsulting.esercizio.dto.User;
 import it.florenceconsulting.esercizio.entity.AnaUtenti;
@@ -63,15 +63,17 @@ public class UtenteService implements IUtenteService {
 		anaUtentiRepo.saveAndFlush(utente);
 		log.info("UtenteService.updateUtente - END");
 	}
-
+	
 	@Override
-	public void deleteUtente(User u) {
-		log.info("UtenteService.deleteUtente - START");
-		AnaUtenti utente = anaUtentiRepo.findUtente(u.getNome(), u.getCognome(), u.getEta(),
-				u.getCodFisc(), u.getIndirizzo(), u.getMail());
-		//TODO Check exist		
-		anaUtentiRepo.delete(utente);
-		log.info("UtenteService.deleteUtente - END");
+	public void deleteUtenteById(Integer id) {
+		log.info("UtenteService.deleteUtenteById - START");
+		Optional<AnaUtenti> utente = anaUtentiRepo.findById(id);
+		//Ho cercato l'utente sul db, se non è presente sollevo eccezione
+		if(!utente.isPresent()) {
+			//TODO Sollevare eccezione
+		}
+		anaUtentiRepo.delete(utente.get());
+		log.info("UtenteService.deleteUtenteById - END");
 	}
 
 	@Override
@@ -98,25 +100,34 @@ public class UtenteService implements IUtenteService {
 	@Override
 	public void uploadCsv(MultipartFile file) {
 		log.info("UtenteService.uploadCsv - START");
+		BufferedReader fileReader = null;
+		CSVParser csvParser = null;
 		try {
-			Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+			fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
+			csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());
 			
-			CsvToBean<User> csvToBean = new CsvToBeanBuilder<User>(reader)
-                     .withType(User.class)
-                     .withIgnoreLeadingWhiteSpace(true)
-                     .build();
-			
-			List<User> users = csvToBean.parse();
-			
-			List<AnaUtenti> utenti = utility.userToAnaUtentiList(users);
+			List<AnaUtenti> utenti = new ArrayList<AnaUtenti>();
+			Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+			for(CSVRecord csvRecord : csvRecords) {
+				AnaUtenti utente = new AnaUtenti();
+				utente.setNome(csvRecord.get("NOME"));
+				utente.setCognome(csvRecord.get("COGNOME"));
+				utente.setEta(Integer.parseInt(csvRecord.get("ETA")));
+				utente.setIndirizzo(csvRecord.get("INDIRIZZO"));
+				utente.setMail(csvRecord.get("MAIL"));
+				utente.setCod_fisc(csvRecord.get("COD_FISC"));
+				utenti.add(utente);
+			}
 			
 			anaUtentiRepo.saveAllAndFlush(utenti);
 			
+			csvParser.close();
+			fileReader.close();
 		} catch (IOException e) {
-			// TODO Gestire eccezioni
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+				
 		log.info("UtenteService.uploadCsv - END");
 	}
-
 }

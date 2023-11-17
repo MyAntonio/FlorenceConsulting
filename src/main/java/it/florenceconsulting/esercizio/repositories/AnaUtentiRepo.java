@@ -13,16 +13,6 @@ import it.florenceconsulting.esercizio.entity.AnaUtenti;
 public interface AnaUtentiRepo extends JpaRepository<AnaUtenti, Integer>{
 	
 	@Query(value = "SELECT a FROM AnaUtenti a "
-			+ "WHERE (lower(a.nome) = lower(:nome)) "
-			+ "AND (lower(a.cognome) = lower(:cognome)) "
-			+ "AND a.eta = :eta  AND (lower(a.cod_fisc) = lower(:codFisc)) "
-			+ "AND (lower(a.indirizzo) = lower(:indirizzo)) "
-			+ "AND (lower(a.mail) = lower(:mail)) ")
-	public AnaUtenti findUtente(@Param("nome") String nome, @Param("cognome") String cognome, 
-			@Param("eta") int eta, @Param("codFisc") String codFisc, 
-			@Param("indirizzo") String indirizzo, @Param("mail") String mail);
-
-	@Query(value = "SELECT a FROM AnaUtenti a "
 			+ "WHERE (:nome IS NULL OR lower(a.nome) = lower(:nome)) "
 			+ "AND (:cognome IS NULL OR lower(a.cognome) = lower(:cognome)) ")
 	public List<AnaUtenti> findUtentiByNomeCongome(@Param("nome") String nome, 

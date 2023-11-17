@@ -12,11 +12,12 @@ public interface IUtenteService {
 
 	void updateUtente(int id,User u);
 
-	void deleteUtente(User u);
-
+	void deleteUtenteById(Integer id);
+	
 	List<User> findUserByNomeCognome(String nome, String cognome);
 
 	List<User> searchUser(User u);
 
 	void uploadCsv(MultipartFile file);
+
 }
