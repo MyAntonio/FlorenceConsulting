@@ -36,7 +36,7 @@ public interface AnaUtentiRepo extends JpaRepository<AnaUtenti, Integer>{
 			+ "AND (:indirizzo IS NULL OR (lower(a.indirizzo) = lower(:indirizzo))) "
 			+ "AND (:mail IS NULL OR (lower(a.mail) = lower(:mail))) ")
 	public List<AnaUtenti> searchUser(@Param("nome") String nome, @Param("cognome") String cognome, 
-			@Param("eta") int eta, @Param("codFisc") String codFisc, 
+			@Param("eta") Integer eta, @Param("codFisc") String codFisc, 
 			@Param("indirizzo") String indirizzo, @Param("mail") String mail);
 
 }

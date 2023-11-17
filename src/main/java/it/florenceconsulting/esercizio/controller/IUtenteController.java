@@ -23,7 +23,8 @@ public interface IUtenteController {
 	public ResponseEntity<Integer> insertUtente(@RequestBody User u);
 	
 	@PutMapping("/update")
-	public ResponseEntity<String> updateUtente(@RequestBody User u);
+	public ResponseEntity<String> updateUtente(@RequestParam(name = "id", required = true) int id, 
+			@RequestBody User u);
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<String> deleteUtente(@RequestBody User u);

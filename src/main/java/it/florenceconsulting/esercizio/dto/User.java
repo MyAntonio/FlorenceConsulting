@@ -1,18 +1,26 @@
 package it.florenceconsulting.esercizio.dto;
 
+import java.io.Serializable;
+
 /**
  * TODO aggiungere documentazione swagger
+ * TODO aggiungere validazioni su singoli campi oggetto
  */
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String nome;
 	private String cognome;
 	private String mail;
-	private int eta;
+	private Integer eta;
 	private String codFisc;
 	private String indirizzo;
 	
-	public User(String nome, String cognome, String mail, int eta, String codFisc, String indirizzo) {
+	public User(String nome, String cognome, String mail, Integer eta, String codFisc, String indirizzo) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.mail = mail;
@@ -45,11 +53,11 @@ public class User {
 		this.mail = mail;
 	}
 
-	public int getEta() {
+	public Integer getEta() {
 		return eta;
 	}
 
-	public void setEta(int eta) {
+	public void setEta(Integer eta) {
 		this.eta = eta;
 	}
 

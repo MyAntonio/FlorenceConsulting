@@ -10,7 +10,7 @@ public interface IUtenteService {
 
 	int insertUtente(User u);
 
-	void updateUtente(User u);
+	void updateUtente(int id,User u);
 
 	void deleteUtente(User u);
 

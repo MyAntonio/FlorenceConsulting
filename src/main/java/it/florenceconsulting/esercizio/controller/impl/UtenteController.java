@@ -32,9 +32,9 @@ public class UtenteController implements IUtenteController {
 	}
 
 	@Override
-	public ResponseEntity<String> updateUtente(User u) {
+	public ResponseEntity<String> updateUtente(int id, User u) {
 		log.info("UtenteController.updateUtente - START");
-		utenteService.updateUtente(u);
+		utenteService.updateUtente(id,u);
 		log.info("UtenteController.updateUtente - END");
 		return ResponseEntity.ok().body("OK");
 	}

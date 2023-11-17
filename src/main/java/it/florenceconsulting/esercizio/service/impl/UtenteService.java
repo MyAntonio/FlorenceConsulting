@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +43,16 @@ public class UtenteService implements IUtenteService {
 	}
 
 	@Override
-	public void updateUtente(User u) {
-		log.info("UtenteService.updateUtente - START");	
-		AnaUtenti utente = anaUtentiRepo.findUtente(u.getNome(), u.getCognome(), u.getEta(),
-				u.getCodFisc(), u.getIndirizzo(), u.getMail());
+	public void updateUtente(int id, User u) {
+		log.info("UtenteService.updateUtente - START");
+		Optional<AnaUtenti> utenteDB = anaUtentiRepo.findById(id);
+		//Ho cercato l'utente sul db, se non è presente sollevo eccezione
+		if(!utenteDB.isPresent()) {
+			//TODO Sollevare eccezione
+		}
 		
-		//TODO Check exist
+		//Aggiorno tutti i campi della entity
+		AnaUtenti utente = utenteDB.get();
 		utente.setNome(u.getNome());
 		utente.setCognome(u.getCognome());
 		utente.setEta(u.getEta());
