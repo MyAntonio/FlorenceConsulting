@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>it.florenceconsulting</groupId>
 	<artifactId>esercizio</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>latest</version>
 	<name>esercizio</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -43,6 +43,12 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.8</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc11</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -57,6 +63,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
+        <finalName>esercizio</finalName>
 	</build>
 
 </project>
