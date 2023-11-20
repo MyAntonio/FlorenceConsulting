@@ -15,9 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import it.florenceconsulting.esercizio.dto.User;
 import jakarta.validation.Valid;
 
-/**
- * TODO aggiungere documentazione swagger
- */
 public interface IUtenteController {
 	
 	@PostMapping("/insert")

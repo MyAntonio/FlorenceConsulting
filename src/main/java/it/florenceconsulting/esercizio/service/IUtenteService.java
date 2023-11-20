@@ -12,7 +12,7 @@ public interface IUtenteService {
 
 	int insertUtente(User u);
 
-	void updateUtente(int id,User u);
+	void updateUtente(int id,User u) throws UtenteException;
 
 	void deleteUtenteById(Integer id) throws UtenteException ;
 	

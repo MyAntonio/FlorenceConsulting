@@ -46,12 +46,12 @@ public class UtenteService implements IUtenteService {
 	}
 
 	@Override
-	public void updateUtente(int id, User u) {
+	public void updateUtente(int id, User u) throws UtenteException {
 		log.info("UtenteService.updateUtente - START");				
 		Optional<AnaUtenti> utenteDB = anaUtentiRepo.findById(id);
 		//Ho cercato l'utente sul db, se non è presente sollevo eccezione
 		if(!utenteDB.isPresent()) {
-			//TODO Sollevare eccezione
+			throw new UtenteException("L'utente con id " + id + " non e' presente a sistema.", HttpStatus.BAD_REQUEST.value());
 		}
 		
 		//Aggiorno tutti i campi della entity

@@ -6,10 +6,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-/**
- * TODO aggiungere documentazione swagger
- * TODO aggiungere validazioni su singoli campi oggetto
- */
 public class User implements Serializable{
 
 	/**
